@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { AutoComplete } from "./AutoComplete";
+import { countries } from "./mock/countries";
 
 const meta: Meta<typeof AutoComplete> = {
   component: AutoComplete,
@@ -10,30 +11,11 @@ export default meta;
 
 type Story = StoryObj<typeof AutoComplete>;
 
-const countries = [
-  "USA",
-  "Canada",
-  "Mexico",
-  "Brazil",
-  "Argentina",
-  "Portugal",
-  "Poland",
-  "Spain",
-  "France",
-  "Germany",
-  "Italy",
-  "Russia",
-  "China",
-  "Japan",
-  "Australia",
-  "New Zealand",
-];
-
 export const Syncronous: Story = {
   args: {
-    placeholder: "Type something",
+    placeholder: "Type a country",
     options: countries,
-    onSelect: (value: string) => {
+    onSelectOption: (value: string) => {
       alert(`Selected: ${value}`);
     },
   },
@@ -41,13 +23,13 @@ export const Syncronous: Story = {
 
 export const Asyncronous10sec: Story = {
   args: {
-    placeholder: "Type something",
+    placeholder: "Refresh the browser and type a country",
     options: new Promise<string[]>((resolve) => {
       setTimeout(() => {
         resolve(countries);
       }, 10000);
     }),
-    onSelect: (value: string) => {
+    onSelectOption: (value: string) => {
       alert(`Selected: ${value}`);
     },
   },

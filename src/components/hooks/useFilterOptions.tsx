@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useDebounce } from "./useDebounce";
 
-export function useAutoComplete(
+export function useFilterOptions(
   options: string[] | Promise<string[]>,
-  inputValue: string,
+  query: string,
 ) {
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
   const [resolvedOptions, setResolvedOptions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const debouncedInputValue = useDebounce(inputValue, 500);
+  const debouncedInputValue = useDebounce(query, 300);
 
   useEffect(() => {
     const resolveOptions = async () => {
@@ -34,7 +34,7 @@ export function useAutoComplete(
   useEffect(() => {
     if (debouncedInputValue) {
       const newFilteredOptions = resolvedOptions.filter((option) =>
-        option.toLowerCase().includes(debouncedInputValue.toLowerCase()),
+        option.toLowerCase().startsWith(debouncedInputValue.toLowerCase()),
       );
       setFilteredOptions(newFilteredOptions);
     } else {
