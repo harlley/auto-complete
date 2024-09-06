@@ -33,6 +33,9 @@ export const Syncronous: Story = {
   args: {
     placeholder: "Type something",
     options: countries,
+    onSelect: (value: string) => {
+      alert(`Selected: ${value}`);
+    },
   },
 };
 
@@ -44,5 +47,8 @@ export const Asyncronous10sec: Story = {
         resolve(countries);
       }, 10000);
     }),
+    onSelect: (value: string) => {
+      alert(`Selected: ${value}`);
+    },
   },
 };
