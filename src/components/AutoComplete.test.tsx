@@ -6,6 +6,7 @@ describe("AutoComplete test:", () => {
   afterEach(cleanup);
 
   it("should render component", () => {
-    render(<AutoComplete placeholder="Testing" />);
+    const countries = ["USA", "Canada", "Mexico"];
+    render(<AutoComplete placeholder="Testing" options={countries} />);
   });
 });
