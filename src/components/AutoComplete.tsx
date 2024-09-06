@@ -9,7 +9,7 @@ type AutoCompleteProps = {
 
 export function AutoComplete({ placeholder, options }: AutoCompleteProps) {
   const [inputValue, setInputValue] = useState("");
-  const filteredOptions = useAutoComplete(options, inputValue);
+  const { filteredOptions, isLoading } = useAutoComplete(options, inputValue);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -17,21 +17,28 @@ export function AutoComplete({ placeholder, options }: AutoCompleteProps) {
 
   return (
     <div className={styles.root}>
-      <input
-        type="text"
-        placeholder={placeholder}
-        value={inputValue}
-        onChange={handleInputChange}
-      />
+      <div className={styles.inputWrapper}>
+        <input
+          type="text"
+          placeholder={placeholder}
+          value={inputValue}
+          onChange={handleInputChange}
+        />
+
+        {isLoading && <Spinner />}
+      </div>
+
       {filteredOptions.length > 0 && (
-        <ul className={styles.optionsList}>
+        <ul>
           {filteredOptions.map((option, index) => (
-            <li key={index} className={styles.option}>
-              {option}
-            </li>
+            <li key={index}>{option}</li>
           ))}
         </ul>
       )}
     </div>
   );
+}
+
+export function Spinner() {
+  return <div className={styles.spinner}></div>;
 }

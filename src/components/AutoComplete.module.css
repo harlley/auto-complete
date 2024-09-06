@@ -1,4 +1,57 @@
 .root {
-  border: 1px solid #ccc;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.root input {
+  width: 100%;
   padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.root ul {
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+}
+
+.root ul > li {
+  list-style-type: none;
+  margin: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.root ul > li:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.root .inputWrapper {
+  position: relative;
+}
+
+.root .spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #333;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

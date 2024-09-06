@@ -7,13 +7,19 @@ export function useAutoComplete(
 ) {
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
   const [resolvedOptions, setResolvedOptions] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const debouncedInputValue = useDebounce(inputValue, 500);
 
   useEffect(() => {
     const resolveOptions = async () => {
       if (options instanceof Promise) {
         try {
-          setResolvedOptions(await options);
+          if (debouncedInputValue) {
+            setIsLoading(true);
+          }
+          const result = await options;
+          setIsLoading(false);
+          setResolvedOptions(result);
         } catch (error) {
           console.error("Failed to fetch options:", error);
           setResolvedOptions([]);
@@ -23,7 +29,7 @@ export function useAutoComplete(
       }
     };
     resolveOptions();
-  }, [options]);
+  }, [options, debouncedInputValue]);
 
   useEffect(() => {
     if (debouncedInputValue) {
@@ -36,5 +42,5 @@ export function useAutoComplete(
     }
   }, [debouncedInputValue, resolvedOptions]);
 
-  return filteredOptions;
+  return { filteredOptions, isLoading };
 }
