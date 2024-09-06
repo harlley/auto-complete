@@ -21,7 +21,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "storybook": "storybook dev -p 6006",
-    "test": "vitest"
+    "test": "vitest",
+    "format:check": "prettier --check .",
+    "format:fix": "prettier --write ."
   },
   "peerDependencies": {
     "react": "^18.3.1",
@@ -48,6 +50,7 @@
     "eslint-plugin-storybook": "^0.8.0",
     "globals": "^15.9.0",
     "jsdom": "^25.0.0",
+    "prettier": "^3.3.3",
     "storybook": "^8.2.9",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
