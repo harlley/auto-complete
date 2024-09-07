@@ -24,6 +24,13 @@ export const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       onSelectOption(value);
     };
 
+    const highlightOption = (option: string, inputValueLength: number) => (
+      <>
+        <u>{option.slice(0, inputValueLength)}</u>
+        {option.slice(inputValueLength)}
+      </>
+    );
+
     return (
       <div className={styles.root}>
         <div className={styles.inputWrapper}>
@@ -48,7 +55,7 @@ export const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
                 className={styles.option}
                 onClick={() => handleOptionClick(option)}
               >
-                {option}
+                {highlightOption(option, inputValue.length)}
               </li>
             ))}
           </ul>
