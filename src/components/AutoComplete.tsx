@@ -1,4 +1,4 @@
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, useCallback, memo } from "react";
 import styles from "./AutoComplete.module.css";
 import { useFilterOptions } from "./hooks/useFilterOptions";
 
@@ -16,19 +16,28 @@ export const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       inputValue,
     );
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setInputValue(event.target.value);
-    };
+    const handleInputChange = useCallback(
+      (event: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(event.target.value);
+      },
+      [],
+    );
 
-    const handleOptionClick = (value: string) => {
-      onSelectOption(value);
-    };
+    const handleOptionClick = useCallback(
+      (value: string) => {
+        onSelectOption(value);
+      },
+      [onSelectOption],
+    );
 
-    const highlightOption = (option: string, inputValueLength: number) => (
-      <>
-        <u>{option.slice(0, inputValueLength)}</u>
-        {option.slice(inputValueLength)}
-      </>
+    const highlightOption = useCallback(
+      (option: string, inputValueLength: number) => (
+        <>
+          <u>{option.slice(0, inputValueLength)}</u>
+          {option.slice(inputValueLength)}
+        </>
+      ),
+      [],
     );
 
     return (
@@ -48,13 +57,9 @@ export const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
         </div>
 
         {filteredOptions.length > 0 && (
-          <ul className={styles.optionsList}>
+          <ul>
             {filteredOptions.map((option, index) => (
-              <li
-                key={index}
-                className={styles.option}
-                onClick={() => handleOptionClick(option)}
-              >
+              <li key={index} onClick={() => handleOptionClick(option)}>
                 {highlightOption(option, inputValue.length)}
               </li>
             ))}
@@ -71,7 +76,7 @@ type ClearProps = {
   setInputValue: (value: string) => void;
 };
 
-const Clear = ({ setInputValue }: ClearProps) => (
+const Clear = memo(({ setInputValue }: ClearProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
@@ -89,4 +94,4 @@ const Clear = ({ setInputValue }: ClearProps) => (
     <line x1="18" y1="6" x2="6" y2="18" />
     <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
-);
+));
