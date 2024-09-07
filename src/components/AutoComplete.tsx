@@ -35,7 +35,7 @@ export function AutoComplete({
         />
         {isLoading && <Spinner />}
         {inputValue.length > 0 && !isLoading && (
-          <ClearIcon setInputValue={setInputValue} />
+          <Clear setInputValue={setInputValue} />
         )}
       </div>
 
@@ -57,18 +57,18 @@ export function AutoComplete({
 }
 
 function Spinner() {
-  return <div className={styles.spinner}></div>;
+  return <div role="progressbar" className={styles.spinner}></div>;
 }
 
-interface ClearIconProps {
+interface ClearProps {
   setInputValue: (value: string) => void;
 }
 
-function ClearIcon({ setInputValue }: ClearIconProps) {
+function Clear({ setInputValue }: ClearProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
+      viewBox="0 0 20 20"
       width="20"
       height="20"
       fill="none"
@@ -76,8 +76,9 @@ function ClearIcon({ setInputValue }: ClearIconProps) {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={styles.clearIcon}
+      className={styles.clear}
       onClick={() => setInputValue("")}
+      role="button"
     >
       <line x1="18" y1="6" x2="6" y2="18" />
       <line x1="6" y1="6" x2="18" y2="18" />
