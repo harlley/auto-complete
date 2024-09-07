@@ -42,8 +42,12 @@ describe("AutoComplete", () => {
     fireEvent.change(input, { target: { value: "po" } });
 
     await waitFor(() => {
-      expect(screen.getByText("Portugal")).toBeInTheDocument();
-      expect(screen.getByText("Poland")).toBeInTheDocument();
+      expect(
+        screen.getByText((_, element) => element?.textContent === "Portugal"),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText((_, element) => element?.textContent === "Poland"),
+      ).toBeInTheDocument();
     });
   });
 
@@ -54,7 +58,9 @@ describe("AutoComplete", () => {
     fireEvent.change(screen.getByRole("textbox"), { target: { value: "po" } });
 
     await waitFor(() => {
-      const option = screen.getByText("Portugal");
+      const option = screen.getByText(
+        (_, element) => element?.textContent === "Portugal",
+      );
       fireEvent.click(option);
     });
 
